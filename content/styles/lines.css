@@ -1,0 +1,33 @@
+table {
+    margin: auto;
+}
+td {
+    width: 50px;
+    height: 50px;
+    
+    background: #cdcdcd;
+}
+.grey {
+    background-image: url(../images/ball1.png);    
+}
+.red {
+    background-image: url(../images/ball2.png);
+}
+.yellow {
+    background-image: url(../images/ball3.png);
+}
+.purple {
+    background-image: url(../images/ball4.png);    
+}
+.cyan {
+    background-image: url(../images/ball5.png);
+}
+.blue {
+    background-image: url(../images/ball6.png);
+}
+.green {
+    background-image: url(../images/ball7.png);
+}
+.selected {
+    background-color: #000;
+}

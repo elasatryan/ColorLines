@@ -1,0 +1,42 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Color Lines</title>
+    <style>
+        @import url(content/styles/lines.css);
+    </style>
+</head>
+<body>
+    <div>
+        <label>
+            <strong>Dashboard size: </strong>
+            <input type="number" id="size" min="5" max="10" value="9" />
+        </label>
+        <label>
+            <strong>Balls count: </strong>
+            <input type="number" id="ballsCount" min="3" max="7" value="3" />
+        </label>
+        <label>
+            <strong>Allow repeating: </strong>
+            <input type="checkbox" id="repeat" checked="checked" />
+        </label>
+        <label>
+            <strong>Removing count: </strong>
+            <input type="number" id="removingCount" min="3" max="5" value="3" />
+        </label>
+        <button type="button" id="newGame">New Game</button>
+    </div>
+    <main>
+        <span id="score"></span>
+        <table class="dashboard"></table>
+        <p></p>
+    </main>
+    <script src="scripts/jquery.js"></script>
+    <script src="scripts/extension.js"></script>
+    <script src="scripts/point.js"></script>
+    <script src="scripts/matrix.js"></script>
+    <script src="scripts/pool.js"></script>
+    <script src="scripts/linesGame.js"></script>
+    <script src="scripts/viewManager.js"></script>
+    
+</body>
+</html>
