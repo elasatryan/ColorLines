@@ -26,7 +26,9 @@
                     bottom = current.bottom(),
                     left = current.left();
 
-                if (endPoint.equals(left) || endPoint.equals(right) || endPoint.equals(top) || endPoint.equals(bottom)) {
+                if ([left, right, top, bottom].some(function (item) {
+                        return item.equals(endPoint);
+                    })) {
                     return true;
                 }
                 if (cloneMatrix.hasPoint(left) && !cloneMatrix.getValue(left)) {
@@ -89,31 +91,32 @@
             queue.forEach(function (item) {
                 that.setValue(item, undefined);
             });
-            return queue.length * 10;
+            return queue;
         }
     });
 
     window.Matrix = Matrix;
 
-    function horizontalRemovals(matrix, point) {
+    function horizontalRemovals(matrix, point, removeCount) {
         var leftPoint = point.left(),
             rightPoint = point.right(),
             value = matrix.getValue(point),
             queue = [point];
 
-        while (matrix.hasPoint(leftPoint) && matrix.getValue(leftPoint) == value) {
+        while (matrix.hasPoint(leftPoint) && matrix.getValue(leftPoint) === value) {
             queue.push(leftPoint);
             leftPoint = leftPoint.left();
         }
-        while (matrix.hasPoint(rightPoint) && matrix.getValue(rightPoint) == value) {
+        while (matrix.hasPoint(rightPoint) && matrix.getValue(rightPoint) === value) {
             queue.push(rightPoint);
             rightPoint = rightPoint.right();
         }
+        return queue.length >= removeCount ? queue : null;
     }
 
-    function verticalRemovals(matrix, point) {
-        var topPoint = point.left(),
-            bottomPoint = point.right(),
+    function verticalRemovals(matrix, point, removeCount) {
+        var topPoint = point.top(),
+            bottomPoint = point.bottom(),
             value = matrix.getValue(point),
             queue = [point];
 
@@ -125,9 +128,10 @@
             queue.push(bottomPoint);
             bottomPoint = bottomPoint.bottom();
         }
+        return queue.length >= removeCount ? queue : null;
     }
 
-    function mainDiagonalRemovals(matrix, point) {
+    function mainDiagonalRemovals(matrix, point, removeCount) {
         var topLeftPoint = point.topLeft(),
             bottomRightPoint = point.bottomRight(),
             value = matrix.getValue(point),
@@ -139,8 +143,9 @@
         }
         while (matrix.hasPoint(bottomRightPoint) && matrix.getValue(bottomRightPoint) === value) {
             queue.push(bottomRightPoint);
-            topLeftPoint = topLeftPoint.bottomRight();
+            bottomRightPoint = bottomRightPoint.bottomRight();
         }
+        return queue.length >= removeCount ? queue : null;
     }
 
     function secondaryDiagonalRemovals(matrix, point, removeCount) {

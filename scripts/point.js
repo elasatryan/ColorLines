@@ -8,32 +8,27 @@
         top: function () {
             var that = this;
 
-            return new Point(that.row, that.column - 1);
+            return new Point(that.row - 1, that.column);
         },
         right: function () {
             var that = this;
 
-            return new Point(that.row + 1, that.column);
+            return new Point(that.row, that.column + 1);
         },
         bottom: function () {
             var that = this;
 
-            return new Point(that.row, that.column + 1);
+            return new Point(that.row + 1, that.column);
         },
         left: function () {
             var that = this;
 
-            return new Point(that.row - 1, that.column);
+            return new Point(that.row, that.column - 1);
         },
         topLeft: function () {
             var that = this;
 
             return new Point(that.row - 1, that.column - 1);
-        },
-        bottomLeft: function () {
-            var that = this;
-
-            return new Point(that.row + 1, that.column - 1);
         },
         topRight: function () {
             var that = this;
@@ -44,6 +39,11 @@
             var that = this;
 
             return new Point(that.row + 1, that.column + 1);
+        },
+        bottomLeft: function () {
+            var that = this;
+
+            return new Point(that.row + 1, that.column - 1);
         },
         equals: function (p) {
             var that = this;

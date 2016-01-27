@@ -5,13 +5,15 @@ Pool.prototype = [];
 
 $.extend(Pool.prototype, {
     replace: function (replacePoint, replaceWith) {
+        // todo: optimize
         for (var i = 0; i < this.length; i++) {
-            if (this[i] == replacePoint) {
+            if (this[i].equals(replacePoint)) {
                 this.splice(i, 1, replaceWith);
             }
         }
     },
     add: function (point) {
+        // todo: optimize
         for (var i = 0; i < arguments.length; i++) {
             this.push(arguments[i]);
         }
