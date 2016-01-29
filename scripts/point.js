@@ -1,5 +1,7 @@
 (function () {
     'use strict';
+    
+    // todo: change constructors to throw errors
     function Point(row, column) {
         this.row = +row || 0;
         this.column = +column || 0;

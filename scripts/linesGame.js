@@ -19,21 +19,25 @@
     $.extend(LinesGame.prototype, {
         addNewBalls: function () {
             var that = this,
+                queue = [],
                 count = that.options.ballsCount,
                 newBalls = that.freeCells.getRandomPoints(count),
                 colors = getColors(count, that.options.repeat);
             newBalls.forEach(function (item, index) {
                 that.dashboard.setValue(item, colors[index]);
-                that.score += that.dashboard.remove(item, that.options.removingCount);
+                queue = that.dashboard.remove(item, that.options.removingCount);
+                that.freeCells.push.apply(that.freeCells, queue);
             });
         },
         moveBall: function (startPoint, endPoint) {
-            var that = this;
+            var that = this,
+                queue = [];
             if (that.dashboard.hasPath(startPoint, endPoint)) {
                 that.dashboard.setValue(endPoint, that.dashboard.getValue(startPoint));
                 that.dashboard.setValue(startPoint, undefined);
                 that.freeCells.replace(endPoint, startPoint);
-                that.score += that.dashboard.remove(endPoint, that.options.removingCount);
+                queue = that.dashboard.remove(endPoint, that.options.removingCount);
+                that.freeCells.push.apply(that.freeCells, queue);
                 that.addNewBalls();
             }
         },
@@ -57,7 +61,7 @@
         var size = options.size,
             ballsCount = options.ballsCount,
             removingCount = options.removingCount;
-        if (size < 5 || size > 10) {
+        if (size < 4 || size > 10) {
             options.size = 9;
         }
         if (ballsCount < 3 || ballsCount > 7) {

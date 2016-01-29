@@ -1,5 +1,5 @@
+// todo: change constructors to throw errors
 function Pool() {
-
 }
 Pool.prototype = [];
 

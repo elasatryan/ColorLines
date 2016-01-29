@@ -56,10 +56,10 @@ $(document).ready(function () {
 
     function initOption() {
         return {
-            size: $('#size').val(),
-            ballsCount: $('#ballsCount').val(),
+            size: +$('#size').val(),
+            ballsCount: +$('#ballsCount').val(),
             repeat: $('#repeat').is(':checked'),
-            removingCount: $('#removingCount').val()
+            removingCount: +$('#removingCount').val()
         };
     }
 

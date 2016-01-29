@@ -1,5 +1,6 @@
 (function () {
     'use strict';
+    // todo: change constructors to throw errors
     function Matrix(size) {
         var that = this;
 
