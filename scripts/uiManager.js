@@ -26,11 +26,19 @@ $(document).ready(function () {
             selectedElement = undefined;
             drawBoard(game.options.size);
         });
-    $('#newGame').click(init);
+    $('#newGame').on('click', function () {
+            var element = $(this);
+        
+            $('.settings').addClass('initial');
+            element.addClass('none'); 
+    })
+    $('#play').on('click', init);
 
     function init() {
         game = new LinesGame(initOption());
         drawBoard(game.options.size);
+        
+        // $('<button>', {id: 'undo', class: 'undo', text: 'Undo'}).appendTo($('main'))
     }
 
     function drawBoard(size) {
@@ -62,6 +70,4 @@ $(document).ready(function () {
             removingCount: +$('#removingCount').val()
         };
     }
-
-    init();
 })

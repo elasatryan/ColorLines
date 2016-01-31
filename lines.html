@@ -1,43 +1,71 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
+    <link rel="icon" href="content/images/favicon.jpg"/>
     <title>Color Lines</title>
     <style>
         @import url(content/styles/lines.css);
     </style>
 </head>
+
 <body>
-    <div>
-        <label>
-            <strong>Dashboard size: </strong>
-            <input type="number" id="size" min="5" max="10" value="9" />
-        </label>
-        <label>
-            <strong>Balls count: </strong>
-            <input type="number" id="ballsCount" min="3" max="7" value="3" />
-        </label>
-        <label>
-            <strong>Allow repeating: </strong>
-            <input type="checkbox" id="repeat" checked="checked" />
-        </label>
-        <label>
-            <strong>Removing count: </strong>
-            <input type="number" id="removingCount" min="3" max="5" value="3" />
-        </label>
-        <button type="button" id="newGame">New Game</button>
+    <div class="settings">
+        <table>
+            <tr>
+                <td>
+                    <label>
+                        <strong>Dashboard size: </strong>
+                        <input type="number" id="size" min="5" max="10" value="9" />
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>
+                        <strong>Balls count: </strong>
+                        <input type="number" id="ballsCount" min="3" max="7" value="3" />
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>
+                        <strong>Allow repeating: </strong>
+                        <input type="checkbox" id="repeat" checked="checked" />
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>
+                        <strong>Removing count: </strong>
+                        <input type="number" id="removingCount" min="3" max="5" value="3" />
+                    </label>
+                </td>
+            </tr>
+        </table>
+        <button type="button" id="play" class="play">Play</button>
+        <button id="undo" class="undo">Undo</button>
+        <button id="redo" class="redo">Redo</button>
     </div>
+    <button type="button" id="newGame" class="new_game">New Game</button>
     <main>
-        <span id="score"></span>
+        <!--<span id="score"></span>-->
         <table class="dashboard"></table>
-        <p></p>
+        <!--<p></p>
+        <button id="undo" class="undo">Undo</button>
+        <button id="redo" class="redo">Redo</button>-->
     </main>
     <script src="scripts/jquery.js"></script>
     <script src="scripts/extension.js"></script>
     <script src="scripts/point.js"></script>
     <script src="scripts/matrix.js"></script>
     <script src="scripts/pool.js"></script>
+    <script src="scripts/gameHistory.js"></script>
     <script src="scripts/gameStep.js"></script>
     <script src="scripts/linesGame.js"></script>
-    <script src="scripts/viewManager.js"></script>
-    
+    <script src="scripts/uiManager.js"></script>
+
 </body>
+
 </html>

@@ -14,9 +14,7 @@ $.extend(Pool.prototype, {
     },
     add: function (point) {
         // todo: optimize
-        for (var i = 0; i < arguments.length; i++) {
-            this.push(arguments[i]);
-        }
+         this.push.apply(this, arguments);
     },
     getPoint: function (index) {
         var that = this;

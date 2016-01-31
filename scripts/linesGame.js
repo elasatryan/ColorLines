@@ -13,8 +13,11 @@
                 that.freeCells.add(new Point(i, j));
             }
         }
+        that.history = new GameHistory();
         that.score = 0;
-        that.addNewBalls();
+        var step = new GameStep();
+        that.addNewBalls(step);
+        that.history.addStep(step);
     }
     $.extend(LinesGame.prototype, {
         addNewBalls: function () {

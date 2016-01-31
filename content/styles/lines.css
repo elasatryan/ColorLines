@@ -1,33 +1,114 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background: #008b8b;
+    
+    /*display: table;*/
+}
+.settings {
+    text-align: center;
+    display: none;
+    margin: auto;
+}
+.settings td {
+    height: 30px;
+    width: 100%;
+    background: none;
+    text-align: left;
+}
+strong {
+    margin-right: 35px;
+}
+
 table {
     margin: auto;
 }
 td {
-    width: 50px;
+    width: 48px;
     height: 50px;
     
-    background: #cdcdcd;
+    text-align: center;
+    
+    background: #ece1e1;
 }
-.grey {
-    background-image: url(../images/ball1.png);    
+label {
+    display: block;
+    
+    font-family: monospace;
 }
-.red {
-    background-image: url(../images/ball2.png);
+.none {
+    display: none;
 }
-.yellow {
-    background-image: url(../images/ball3.png);
+.play {
+    height: 30px;
+    width: 50px;
+    
+    /*border-radius: 50%;*/
+    display: block;
+    margin: 10px auto;
+    outline: none;
 }
-.purple {
-    background-image: url(../images/ball4.png);    
+.undo, .redo {
+    height: 30px;
+    width: 50px;
 }
-.cyan {
-    background-image: url(../images/ball5.png);
+.initial {
+    display: block;
 }
-.blue {
-    background-image: url(../images/ball6.png);
+.grey::after, .red::after, .yellow::after, .purple::after,
+.cyan::after, .blue::after, .green::after {
+    content: '';
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    
+    display: inline-block;
 }
-.green {
-    background-image: url(../images/ball7.png);
+.grey::after{
+    background: #575e66;
+}
+.red::after {
+    background: #aa0114;
+}
+.yellow::after {
+    background: #e3dc00;
+}
+.purple::after {
+    background: #955bbb;
+}
+.cyan::after {
+    background: #008b8b;
+}
+.blue::after {
+    background: #008ebe;
+}
+.green::after {
+    background: #1fac4c;
 }
 .selected {
-    background-color: #000;
+    opacity: .5;
+}
+.new_game {
+    /*display: table;*/
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    font-family: sans-serif;
+    border: none;
+    outline: none;
+    margin: auto;
+    position: absolute;
+    top: 40%;
+    left: 42%;
+    transform: translate(50%);
+    transition: .5s;
+    color: #6B706B;
+    /*padding: 5px;*/
+}
+.new_game:hover {
+    cursor: pointer;
+    box-shadow: 5px 5px 1px #888;
 }
