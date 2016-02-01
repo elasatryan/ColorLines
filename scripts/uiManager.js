@@ -30,9 +30,22 @@ $(document).ready(function () {
             var element = $(this);
         
             $('.settings').addClass('initial');
-            element.addClass('none'); 
-    })
+            element.addClass('none');
+    });
+
     $('#play').on('click', init);
+
+    $('.undo').click(function () {
+        game.history.undoStep();
+        var step = game.history.undone[game.history.undone.length - 1];
+    });
+    $('.redo').click(function () {
+        game.history.redoStep();
+        var step = game.history.lastStep();
+        if (step) {
+            console.log(true);
+        }
+    });
 
     function init() {
         game = new LinesGame(initOption());
