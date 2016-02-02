@@ -3,7 +3,7 @@ $(document).ready(function () {
     var game,
         selectedElement,
         colors = ['grey', 'red', 'yellow', 'purple', 'cyan', 'blue', 'green'],
-        score = $('#score'),
+        score = $('<span>', {text: 'score:', id: 'score'}),
         ballsSelector = colors.map(function (color) {
             return 'td.' + color;
         }).join(),
@@ -36,21 +36,19 @@ $(document).ready(function () {
     $('#play').on('click', init);
 
     $('.undo').click(function () {
-        game.history.undoStep();
-        var step = game.history.undone[game.history.undone.length - 1];
+        var step = game.history.lastStep();
+        game.history.undoStep() && drawStep(step.reverse());
     });
     $('.redo').click(function () {
         game.history.redoStep();
         var step = game.history.lastStep();
-        if (step) {
-            console.log(true);
-        }
+        drawStep(step);
     });
 
     function init() {
         game = new LinesGame(initOption());
         drawBoard(game.options.size);
-        
+
         // $('<button>', {id: 'undo', class: 'undo', text: 'Undo'}).appendTo($('main'))
     }
 
@@ -71,10 +69,23 @@ $(document).ready(function () {
             score.empty().text('Score:' + game.score).appendTo($('main'));
         }
         else {
-            $('<p>').text('Game Over').appendTo(score);
+            /*$('<p>').text('Game Over').appendTo(score);*/
         }
     }
 
+    function drawStep(step) {
+        step.added.forEach(function (item) {
+            $(getPointSelector(item.point)).addClass(colors[item.color - 1]);
+        });
+
+        step.removed.forEach(function (item) {
+            $(getPointSelector(item.point)).removeAttr('class');
+        });
+    }
+
+    function getPointSelector(point) {
+        return 'tr:nth-child(' + (point.row + 1) + ') td:nth-child(' + (point.column + 1) + ')';
+    }
     function initOption() {
         return {
             size: +$('#size').val(),

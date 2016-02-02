@@ -47,7 +47,7 @@
 
             return new Point(that.row + 1, that.column - 1);
         },
-        equals: function (p) {
+        equals: function (point) {
             var that = this;
 
             if (arguments.length > 1) {
@@ -58,7 +58,7 @@
                 }
                 return true;
             }
-            return that.row === p.row && that.column === p.column;
+            return that.row === point.row && that.column === point.column;
         }
     });
 

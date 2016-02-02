@@ -5,66 +5,68 @@
     function LinesGame(options) {
         var that = this;
         that.options = verifyOptions(options);
-        that.dashboard = new Matrix(that.options.size);
-        that.freeCells = new Pool();
-
-        for (var i = 0; i < that.options.size; i++) {
-            for (var j = 0; j < that.options.size; j++) {
-                that.freeCells.add(new Point(i, j));
-            }
-        }
+        var size = that.options.size;
+        that.dashboard = new Matrix(size);
+        that.freeCells = getInitialPool(size);
         that.history = new GameHistory();
         that.score = 0;
         var step = new GameStep();
-        that.addNewBalls(step);
+        addNewBalls(that, step);
         that.history.addStep(step);
     }
+
     $.extend(LinesGame.prototype, {
-        addNewBalls: function () {
-            var that = this,
-                queue = [],
-                count = that.options.ballsCount,
-                newBalls = that.freeCells.getRandomPoints(count),
-                colors = getColors(count, that.options.repeat);
-            newBalls.forEach(function (item, index) {
-                that.dashboard.setValue(item, colors[index]);
-                queue = that.dashboard.remove(item, that.options.removingCount);
-                that.freeCells.push.apply(that.freeCells, queue);
-            });
-        },
         moveBall: function (startPoint, endPoint) {
-            var that = this,
-                queue = [];
-            if (that.dashboard.hasPath(startPoint, endPoint)) {
-                that.dashboard.setValue(endPoint, that.dashboard.getValue(startPoint));
-                that.dashboard.setValue(startPoint, undefined);
-                that.freeCells.replace(endPoint, startPoint);
-                queue = that.dashboard.remove(endPoint, that.options.removingCount);
-                that.freeCells.push.apply(that.freeCells, queue);
-                that.addNewBalls();
+            var that = this;
+            if (!that.dashboard.hasPath(startPoint, endPoint)) {
+                return;
             }
+
+            var step = new GameStep(),
+                color = that.dashboard.getValue(startPoint);
+            that.dashboard.setValue(endPoint, color);
+            that.dashboard.setValue(startPoint, undefined);
+            that.freeCells.replace(endPoint, startPoint);
+
+            step.removing(new Ball(startPoint, color));
+
+            var itemsToRemove = that.dashboard.remove(endPoint, that.options.removingCount);
+            step.removing.apply(step, pointsToBalls(itemsToRemove, color));
+
+            if (!itemsToRemove) {
+                step.adding(new Ball(endPoint, color));
+            }
+
+            that.freeCells.add.apply(that.freeCells, itemsToRemove);
+
+            addNewBalls(that, step);
+
+            that.history.addStep(step);
+
         },
         gameOver: function () {
             var that = this;
-            return that.freeCells.length == 0;
+            return 0 === that.freeCells.length;
         }
     });
-    function getColors(count, repeat) {
-        var queue = [],
-            color;
+
+    //this function returns random colors queue
+    function getRandomColors(count, repeat) {
+        var queue = [];
         while (queue.length < count) {
-            color = Math.randomInt(maxColorsCount);
+            var color = Math.randomInt(maxColorsCount);
             if (repeat || queue.indexOf(color) < 0) {
                 queue.push(color);
             }
         }
         return queue;
     }
+
     function verifyOptions(options) {
         var size = options.size,
             ballsCount = options.ballsCount,
             removingCount = options.removingCount;
-        if (size < 4 || size > 10) {
+        if (size < 5 || size > 10) {
             options.size = 9;
         }
         if (ballsCount < 3 || ballsCount > 7) {
@@ -75,5 +77,38 @@
         }
         return options;
     }
+
+    function getInitialPool(size) {
+        var pool = new Pool();
+        for (var i = 0; i < size; i++) {
+            for (var j = 0; j < size; j++) {
+                pool.add(new Point(i, j));
+            }
+        }
+        return pool;
+    }
+
+    function addNewBalls(game, step) {
+        var count = game.options.ballsCount,
+            newBalls = game.freeCells.getRandomPoints(count),
+            colors = getRandomColors(count, game.options.repeat);
+        newBalls.forEach(function (item, index) {
+            var color = colors[index];
+            game.dashboard.setValue(item, color);
+            var itemsToRemove = game.dashboard.remove(item, game.options.removingCount);
+            game.freeCells.add.apply(game.freeCells, itemsToRemove);
+            step.removing.apply(step, pointsToBalls(itemsToRemove, color));
+            if (!itemsToRemove) {
+                step.adding(new Ball(item, color));
+            }
+        });
+    }
+
+    function pointsToBalls(pointArray, color) {
+        return pointArray && pointArray.map(function (item) {
+                return new Ball(item, color);
+            });
+    }
+
     window.LinesGame = LinesGame;
 })();

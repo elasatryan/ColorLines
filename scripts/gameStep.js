@@ -16,13 +16,9 @@
             that.removed.push.apply(that.removed, arguments);
         },
         reverse: function () {
-            var that = this,
-                queue;
+            var that = this;
 
-            queue = that.added;
-            that.added = that.removed;
-            that.removed = queue;
-            return that;
+            return new GameStep(that.removed, that.added);
         }
     });
     window.GameStep = GameStep;
