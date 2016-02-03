@@ -1,25 +1,25 @@
 (function () {
+    'use strict';
     function GameStep(added, removed) {
-        this.added = added || [];
-        this.removed = removed || [];
+        var that = this;
+        that.added = added || [];
+        that.removed = removed || [];
     }
 
     $.extend(GameStep.prototype, {
         adding: function (item) {
-            this.added.push.apply(this.added, arguments);
+            var that = this;
+            that.added.push.apply(that.added, arguments);
         },
         removing: function (item) {
-            this.removed.push.apply(this.removed, arguments);
+            var that = this;
+            that.removed.push.apply(that.removed, arguments);
         },
         reverse: function () {
-            var queue;
+            var that = this;
 
-            queue = this.added;
-            this.added = this.removed;
-            this.removed = queue;
-            return this;
+            return new GameStep(that.removed, that.added);
         }
     });
-
     window.GameStep = GameStep;
 })();

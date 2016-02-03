@@ -1,30 +1,40 @@
 (function () {
+    'use strict';
     function GameHistory() {
-        this.undone = [];
+        var that = this;
+        that.undone = [];
     }
 
     GameHistory.prototype = [];
-
     $.extend(GameHistory.prototype, {
         undoStep: function () {
-            if (1 === this.length) {
+            var that = this;
+            if (1 === that.length) {
                 return;
             }
-            var item = this.pop();
-            item && this.undone.push(item);
+            that.undone.push(that.pop());
+
+            return that;
         },
         redoStep: function () {
-            var item = this.undone.pop();
-            item && this.push(item);
+            var that = this,
+                item = that.undone.pop();
+            return item && (that.push(item), that);
         },
         addStep: function (step) {
-            this.undone.length = 0;
-            this.push(step);
+            var that = this;
+            if (!step) {
+                throw new Error('Invalid argument');
+            }
+            that.undone.length = 0;
+            that.push(step);
         },
         lastStep: function () {
-            return this[this.length - 1];
+            var that = this;
+            return that[that.length - 1];
         }
+        //todo: score
     });
-    
+
     window.GameHistory = GameHistory;
 })();

@@ -92,7 +92,8 @@
             queue.forEach(function (item) {
                 that.setValue(item, undefined);
             });
-            return queue;
+            queue.length && that.setValue(point, undefined);
+            return queue.length ? queue : null;
         }
     });
 

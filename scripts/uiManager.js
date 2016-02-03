@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(function () {
     'use strict';
     var game,
         selectedElement,
@@ -25,28 +25,22 @@ $(document).ready(function () {
             game.moveBall(selectedElement.data('point'), element.data('point'));
             selectedElement = undefined;
             drawBoard(game.options.size);
-
-            drawStep(game.history.getLastStep());
-
         });
     $('#newGame').on('click', function () {
-        var element = $(this);
-
-        $('.settings').addClass('initial');
-        element.addClass('none');
+            var element = $(this);
+        
+            $('.settings').addClass('initial');
+            element.addClass('none'); 
     })
     $('#play').on('click', init);
-$('#undo').click(function () {
-        game.history.undoStep();
-        var step = game.history.undone[game.history.undone.length - 1];
-        drawStep(step.reverse());
+    
+    $('.undo').click(function () {
+        drawStep(game.undo());
     });
-    $('#redo').click(function () {
-        game.history.redoStep();
-        var step = game.history.getLastStep();
-        console.log(step.reverse());
-        drawStep(step.reverse());
+    $('.redo').click(function () {
+        drawStep(game.redo());
     });
+
     function init() {
         game = new LinesGame(initOption());
         drawBoard(game.options.size);
@@ -74,20 +68,23 @@ $('#undo').click(function () {
             $('<p>').text('Game Over').appendTo(score);
         }
     }
+    
     function drawStep(step) {
+        if (!step) {
+            return;
+        }
         step.added.forEach(function (item) {
-            var color = game.dashboard.getValue(item);
-            $(getPointSelector(item)).addClass(colors[color]);
+            $(getPointSelector(item.point)).addClass(colors[item.color - 1]);
         });
 
         step.removed.forEach(function (item) {
-            $(getPointSelector(item)).removeAttr('class');
+            $(getPointSelector(item.point)).removeAttr('class');
         });
     }
-
     function getPointSelector(point) {
         return 'tr:nth-child(' + (point.row + 1) + ') td:nth-child(' + (point.column + 1) + ')';
     }
+
     function initOption() {
         return {
             size: +$('#size').val(),
