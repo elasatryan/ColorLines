@@ -46,7 +46,6 @@ label {
     height: 30px;
     width: 50px;
     
-    /*border-radius: 50%;*/
     display: block;
     margin: 10px auto;
     outline: none;
@@ -60,12 +59,13 @@ label {
 }
 .grey::after, .red::after, .yellow::after, .purple::after,
 .cyan::after, .blue::after, .green::after {
-    content: '';
-    width: 30px;
     height: 30px;
-    border-radius: 50%;
+    width: 30px;
+    
+    content: '';
     
     display: inline-block;
+    border-radius: 50%;
 }
 .grey::after{
     background: #575e66;

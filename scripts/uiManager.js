@@ -25,15 +25,28 @@ $(document).ready(function () {
             game.moveBall(selectedElement.data('point'), element.data('point'));
             selectedElement = undefined;
             drawBoard(game.options.size);
+
+            drawStep(game.history.getLastStep());
+
         });
     $('#newGame').on('click', function () {
-            var element = $(this);
-        
-            $('.settings').addClass('initial');
-            element.addClass('none'); 
+        var element = $(this);
+
+        $('.settings').addClass('initial');
+        element.addClass('none');
     })
     $('#play').on('click', init);
-
+$('#undo').click(function () {
+        game.history.undoStep();
+        var step = game.history.undone[game.history.undone.length - 1];
+        drawStep(step.reverse());
+    });
+    $('#redo').click(function () {
+        game.history.redoStep();
+        var step = game.history.getLastStep();
+        console.log(step.reverse());
+        drawStep(step.reverse());
+    });
     function init() {
         game = new LinesGame(initOption());
         drawBoard(game.options.size);
@@ -61,7 +74,20 @@ $(document).ready(function () {
             $('<p>').text('Game Over').appendTo(score);
         }
     }
+    function drawStep(step) {
+        step.added.forEach(function (item) {
+            var color = game.dashboard.getValue(item);
+            $(getPointSelector(item)).addClass(colors[color]);
+        });
 
+        step.removed.forEach(function (item) {
+            $(getPointSelector(item)).removeAttr('class');
+        });
+    }
+
+    function getPointSelector(point) {
+        return 'tr:nth-child(' + (point.row + 1) + ') td:nth-child(' + (point.column + 1) + ')';
+    }
     function initOption() {
         return {
             size: +$('#size').val(),
