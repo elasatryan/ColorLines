@@ -1,9 +1,9 @@
 (function () {
     'use strict';
-    function BallColor(point, value) {
+    function BallColor(point, color) {
         var that = this;
         that.point = point;
-        that.color = value;
+        that.color = color;
     }
 
     window.BallColor = BallColor;

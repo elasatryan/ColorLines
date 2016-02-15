@@ -10,7 +10,7 @@
         undoStep: function () {
             var that = this;
             if (1 === that.length) {
-                return;
+                return null;
             }
             that.undone.push(that.pop());
 
@@ -19,7 +19,7 @@
         redoStep: function () {
             var that = this,
                 item = that.undone.pop();
-            return item && (that.push(item), that);
+            return item && (that.push(item) || that);
         },
         addStep: function (step) {
             var that = this;
@@ -28,6 +28,8 @@
             }
             that.undone.length = 0;
             that.push(step);
+
+            return that;
         },
         lastStep: function () {
             var that = this;

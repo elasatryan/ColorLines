@@ -74,11 +74,11 @@
                 return that[point.row][point.column];
             }
         },
-        setValue: function (point, value) {
+        setValue: function (point, val) {
             var that = this;
 
             if (that.hasPoint(point)) {
-                that[point.row][point.column] = value;
+                that[point.row][point.column] = val;
             }
         },
         remove: function (point, removeCount) {

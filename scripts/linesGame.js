@@ -97,7 +97,7 @@
         return pool;
     }
 
-    function modifyMatrixByStep(matrix, step) {
+    function modifyMatrixByStep(game, step) {
         step.added.forEach(function (item) {
             matrix.setValue(item.point, item.color);
         });
@@ -106,7 +106,7 @@
         });
     }
 
-    function addNewBalls(game, step) {
+    function addNewBalls(game, ball) {
         var count = game.options.ballsCount,
             newBalls = game.freeCells.getRandomPoints(count),
             colors = getRandomColors(count, game.options.repeat);
@@ -115,9 +115,9 @@
             game.dashboard.setValue(item, color);
             var itemsToRemove = game.dashboard.remove(item, game.options.removingCount);
             game.freeCells.add.apply(game.freeCells, itemsToRemove);
-            step.removing.apply(step, pointsToBalls(itemsToRemove, color));
+            ball.removing.apply(ball, pointsToBalls(itemsToRemove, color));
             if (!itemsToRemove) {
-                step.adding(new BallColor(item, color));
+                ball.adding(new BallColor(item, color));
             }
         });
     }
